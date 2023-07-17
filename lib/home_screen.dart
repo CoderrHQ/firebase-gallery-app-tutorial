@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_gallery_tutorial/image_view.dart';
 import 'package:firebase_gallery_tutorial/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
           image == null
               ? const SizedBox()
               : IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    saveImageToFirebase(image!);
+                  },
                   icon: const Icon(Icons.save),
                 ),
         ],
@@ -31,15 +34,22 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: image == null
-                ? Image.asset('images/image_placeholder.png')
-                : Image.file(
-                    fit: BoxFit.cover,
-                    image!,
-                  ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: image == null
+                  ? Image.asset('images/image_placeholder.png')
+                  : Image.file(
+                      fit: BoxFit.cover,
+                      image!,
+                    ),
+            ),
           ),
+          const Expanded(
+            flex: 3,
+            child: ImageView(),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
